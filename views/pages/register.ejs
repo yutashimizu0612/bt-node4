@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body>
+    <div class="wrapper">
+      <!-- header -->
+      <%- include("../partials/header") %>
+      <!-- END header -->
+      <!-- alert -->
+      <div class="mb-6">
+        <div class="notification is-danger is-light">
+          <button class="delete"></button>
+        </div>
+      </div>
+      <!-- END alert -->
+      <% } %>
+      <!-- フォーム -->
+      <form action="/register" method="post">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Name</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input" type="text" name="name" />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Email</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input" type="email" name="email" />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Password</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input" type="password" name="password" />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Confirm Password</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <input class="input" type="password" name="confirm_password" />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons mt-3 is-centered">
+          <button class="button is-info" type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
