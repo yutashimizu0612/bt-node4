@@ -9,23 +9,25 @@ exports.register = (req, res) => {
     return res.render('pages/register', { errors: errors.array() });
   }
   // ユーザ登録
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-  const newUser = {
-    name: req.body.name,
-    email: req.body.email,
-    password: hashedPassword,
-  };
-  connection.query('INSERT INTO users SET ?', newUser, function (
-    error,
-    result
-  ) {
-    if (error) {
-      console.log(error);
-      return res.render('pages/register', {
-        errors: [{ msg: '名前かメールアドレスが重複しています。' }],
-      });
-    }
-    console.log('new user is created');
-    res.redirect('/');
+  bcrypt.hash(req.body.password, 10, function (err, hash) {
+    // Store hash in your password DB.
+    const newUser = {
+      name: req.body.name,
+      email: req.body.email,
+      password: hash,
+    };
+    connection.query('INSERT INTO users SET ?', newUser, function (
+      error,
+      result
+    ) {
+      if (error) {
+        console.log(error);
+        return res.render('pages/register', {
+          errors: [{ msg: '名前かメールアドレスが重複しています。' }],
+        });
+      }
+      console.log('new user is created');
+      res.redirect('/');
+    });
   });
 };
