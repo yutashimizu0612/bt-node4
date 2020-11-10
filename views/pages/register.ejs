@@ -7,12 +7,17 @@
       <%- include("../partials/header") %>
       <!-- END header -->
       <!-- alert -->
+      <% if (typeof errors !== 'undefined') { %>
       <div class="mb-6">
+        <% errors.forEach(function (error) { %>
         <div class="notification is-danger is-light">
           <button class="delete"></button>
+          <%= error.msg %>
         </div>
+        <% }); %>
       </div>
       <!-- END alert -->
+      <% } %>
       <!-- フォーム -->
       <form action="/register" method="post">
         <div class="field is-horizontal">

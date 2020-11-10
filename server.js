@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const connection = require('./model/dbConnection');
 const auth = require('./controllers/auth');
+const validation = require('./functions/validation');
 
 const app = express();
 
@@ -21,9 +22,8 @@ app.get('/register', (req, res) => {
   res.render('pages/register');
 });
 
-app.post('/register', (req, res) => {
-  auth.register(req);
-  res.redirect('/');
+app.post('/register', validation.validateRegisterForm(), (req, res) => {
+  auth.register(req, res);
 });
 
 app.get('/login', (req, res) => {
