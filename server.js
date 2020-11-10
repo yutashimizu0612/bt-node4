@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
-const connection = require('./model/dbConnection');
 const auth = require('./controllers/auth');
 const validation = require('./functions/validation');
 
