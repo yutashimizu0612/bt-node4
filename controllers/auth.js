@@ -9,8 +9,7 @@ exports.register = (req, res) => {
     return res.render('pages/register', { errors: errors.array() });
   }
   // ユーザ登録
-  bcrypt.hash(req.body.password, 10, function (err, hash) {
-    // Store hash in your password DB.
+  bcrypt.hash(req.body.password, 10).then(function (hash) {
     const newUser = {
       name: req.body.name,
       email: req.body.email,
