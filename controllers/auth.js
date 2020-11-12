@@ -3,33 +3,33 @@ const db_setting = require('../model/dbSetting');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
-exports.register = (req, res) => {
+exports.register = async (req, res) => {
   // バリデーションエラーの場合、エラー文と入力値を渡す
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.render('pages/register', { errors: errors.array() });
   }
   // ユーザ登録
-  bcrypt.hash(req.body.password, 10).then(function (hash) {
-    const newUser = {
-      name: req.body.name,
-      email: req.body.email,
-      password: hash,
-    };
-    connection.query('INSERT INTO users SET ?', newUser, function (
-      error,
-      result
-    ) {
-      if (error) {
-        console.log(error);
-        return res.render('pages/register', {
-          errors: [{ msg: '名前かメールアドレスが重複しています。' }],
-        });
-      }
-      console.log('new user is created');
-      res.redirect('/');
-    });
-  });
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    const { name, email } = req.body;
+    console.log('name', name);
+    console.log('email', email);
+    console.log('hash', hash);
+    connection = await mysql.createConnection(db_setting);
+    await connection.execute(
+      'INSERT INTO users SET name = ?, email = ?, password = ?',
+      [name, email, hash]
+    );
+    console.log('new user is created');
+    res.redirect('/');
+  } catch (error) {
+    console.log('error', error);
+    return res.status(400).json({ error: error });
+    // return res.render('pages/register', {
+    //   errors: [{ msg: '名前かメールアドレスが重複しています。' }],
+    // });
+  }
 };
 
 exports.login = async (req, res) => {
