@@ -29,6 +29,10 @@ app.get('/login', (req, res) => {
   res.render('pages/login');
 });
 
+app.post('/login', (req, res) => {
+  auth.login(req, res);
+});
+
 app.listen(3000, () => {
   console.log('Server is started.');
 });
