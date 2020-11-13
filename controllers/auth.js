@@ -13,9 +13,6 @@ exports.register = async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
     const { name, email } = req.body;
-    console.log('name', name);
-    console.log('email', email);
-    console.log('hash', hash);
     connection = await mysql.createConnection(db_setting);
     await connection.execute(
       'INSERT INTO users SET name = ?, email = ?, password = ?',
