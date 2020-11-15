@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const auth = require('./controllers/auth');
 const validation = require('./middleware/validation');
 const { authenticateToken } = require('./middleware/authenticateToken');
+const postRouter = require('./routes/post');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static(__dirname + '/static'));
+app.use('/quiz', quizRouter);
 
 // トップページ
 app.get('/', authenticateToken, (req, res) => {
