@@ -1,7 +1,11 @@
 const mysql = require('mysql2/promise');
-const db_setting = require('../model/dbSetting');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
+
+const db_setting = require('../model/dbSetting');
+const { generateAccessToken } = require('../functions/generateAccessToken');
+
+require('dotenv').config();
 
 exports.register = async (req, res) => {
   // バリデーションエラーの場合、エラー文と入力値を渡す
@@ -38,7 +42,6 @@ exports.login = async (req, res) => {
     ] = await connection.execute('SELECT * FROM users WHERE email = ?', [
       req.body.email,
     ]);
-    console.log('user', user);
     // ユーザが見つからない場合
     if (!user[0]) {
       console.log('email not found');
@@ -48,8 +51,13 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(req.body.password, user[0].password);
     if (match) {
       // login
-      console.log('login success');
-      res.redirect('/');
+      const accessToken = generateAccessToken({
+        name: user[0].name,
+        email: user[0].email,
+      });
+      // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+      // ここでrefreshTokenをDBに保存？
+      res.json({ accessToken });
     } else {
       console.log('password error');
       return res.json({ message: 'パスワードが間違っています。' });
