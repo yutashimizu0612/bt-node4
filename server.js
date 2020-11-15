@@ -14,10 +14,12 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static(__dirname + '/static'));
 
+// トップページ
 app.get('/', authenticateToken, (req, res) => {
   res.render('pages/index');
 });
 
+// ユーザ登録
 app.get('/register', (req, res) => {
   res.render('pages/register');
 });
@@ -26,6 +28,7 @@ app.post('/register', validation.validateRegisterForm(), (req, res) => {
   auth.register(req, res);
 });
 
+// ログイン
 app.get('/login', (req, res) => {
   res.render('pages/login');
 });
@@ -34,9 +37,9 @@ app.post('/login', (req, res) => {
   auth.login(req, res);
 });
 
-app.post('/token', (req, res) => {
-  const refreshToken = req.body.token;
-});
+// app.post('/token', (req, res) => {
+//   const refreshToken = req.body.token;
+// });
 
 app.listen(3000, () => {
   console.log('Server is started.');
