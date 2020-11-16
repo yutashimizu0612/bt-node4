@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body>
+    <div class="wrapper">
+      <%- include("../partials/header") %>
+      <form>
+        <div class="field">
+          <label for="title" class="label">タイトル</label>
+          <div class="control">
+            <!-- TODO 編集の時はDBから取得した現在の値をvalueとしてセット -->
+            <input id="title" class="input" type="text" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="content" class="label">コンテンツ</label>
+          <div class="control">
+            <textarea id="content" class="textarea"></textarea>
+          </div>
+        </div>
+        <div class="buttons">
+          <button id="login-button" class="button is-info" type="submit">
+            <!-- TODO 新規か編集でボタンの文言変更 -->
+            新規投稿 or 編集完了
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
