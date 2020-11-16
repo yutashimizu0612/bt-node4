@@ -12,3 +12,5 @@ postRouter.get('/new', (req, res) => {
 postRouter.get('/:postid', (req, res) => {
   res.render('pages/post');
 });
+
+module.exports = postRouter;
