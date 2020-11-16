@@ -44,23 +44,20 @@ exports.login = async (req, res) => {
     ]);
     // ユーザが見つからない場合
     if (!user[0]) {
-      console.log('email not found');
-      return res.json({ message: '登録されていないメールアドレスです。' });
+      return res.json({ error: '登録されていないメールアドレスです。' });
     }
     // ログイン処理
     const match = await bcrypt.compare(req.body.password, user[0].password);
     if (match) {
-      // login
       const accessToken = generateAccessToken({
         name: user[0].name,
         email: user[0].email,
       });
       // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
       // ここでrefreshTokenをDBに保存？
-      res.json({ accessToken });
+      res.json({ token: accessToken });
     } else {
-      console.log('password error');
-      return res.json({ message: 'パスワードが間違っています。' });
+      return res.json({ error: 'パスワードが間違っています。' });
     }
   } catch (error) {
     console.log('error', error);
