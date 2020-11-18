@@ -3,9 +3,7 @@
   <%- include("../partials/head") %>
   <body>
     <div class="wrapper">
-      <%- include("../partials/header") %>
-      <!-- postをDBのposttableから取ってきたデータでループさせる -->
-      <% posts.forEach((post) => { %>
+      <%- include("../partials/header") %> <% posts.forEach((post) => { %>
       <div class="post">
         <h2 class="post__title"><%- post.title %></h2>
         <p class="post__content"><%- post.content %></p>
@@ -16,7 +14,11 @@
           <span class="like__number">3</span>
         </div>
         <div class="buttons mt-3">
-          <button class="button is-small is-info is-rounded">編集</button>
+          <a
+            href="/post/<%- post.id %>/edit"
+            class="button is-small is-info is-rounded"
+            >編集</a
+          >
           <button class="button is-small is-danger is-rounded is-outlined">
             削除
           </button>
