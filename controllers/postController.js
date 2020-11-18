@@ -8,15 +8,14 @@ module.exports = {
   },
   showEditPage: async (req, res) => {
     const post = await Post.getPost(req.params.id);
-    res.render('pages/edit', { post });
+    res.render('pages/edit', { post, id: req.params.id });
   },
   doCreateNewPost: async (req, res) => {
     await Post.createNewPost(req.body.title, req.body.content);
     res.redirect('/post');
   },
-  doUpdatePost: (req, res) => {
-    console.log('doUpdatePost');
-    // 変更されたtitleかcontentを、該当のpostデータに上書き（update）
-    res.render('pages/post');
+  doUpdatePost: async (req, res) => {
+    await Post.updatePost(req.body.title, req.body.content, req.params.id);
+    res.redirect('/post');
   },
 };

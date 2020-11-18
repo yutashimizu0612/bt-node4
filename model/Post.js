@@ -37,10 +37,26 @@ module.exports = {
       console.log('new post is created');
       await connection.end();
       console.log('DBconnection is closed');
+      return;
     } catch (error) {
       console.log('error', error);
       return res.status(400).json({ error: error });
     }
   },
-  updatePost: () => {},
+  updatePost: async (title, content, id) => {
+    try {
+      const connection = await mysql.createConnection(db_setting);
+      await connection.execute(
+        `UPDATE ${table} SET title = ?, content = ? WHERE id = ?`,
+        [title, content, id]
+      );
+      console.log('The post is updated');
+      await connection.end();
+      console.log('DBconnection is closed');
+      return;
+    } catch (error) {
+      console.log('error', error);
+      return res.status(400).json({ error: error });
+    }
+  },
 };
