@@ -8,7 +8,6 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       const [posts] = await connection.execute(`SELECT * FROM ${table}`);
-      console.log('posts', posts);
       return posts;
     } catch (error) {
       console.log('error', error);
@@ -21,7 +20,6 @@ module.exports = {
       const [
         post,
       ] = await connection.execute(`SELECT * FROM ${table} WHERE id = ?`, [id]);
-      console.log('post', post[0]);
       return post[0];
     } catch (error) {
       console.log('error', error);
@@ -37,8 +35,8 @@ module.exports = {
         [title, content]
       );
       console.log('new post is created');
-      console.log('DBconnection is closed');
       await connection.end();
+      console.log('DBconnection is closed');
     } catch (error) {
       console.log('error', error);
       return res.status(400).json({ error: error });
