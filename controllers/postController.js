@@ -2,24 +2,22 @@
 const Post = require('../model/Post');
 
 module.exports = {
-  doGetAllPosts: (req, res) => {
+  doGetAllPosts: async (req, res) => {
     console.log('doGetAllPosts');
-    // DBから全postデータを取得
-    // res.renderにそのpostデータを渡す
-    res.render('pages/posts');
+    const posts = await Post.getAllPosts();
+    res.render('pages/posts', { posts });
   },
-  doGetPost: (req, res) => {
-    console.log('doGetPost');
+  showEditPage: async (req, res) => {
+    console.log('showEditPage');
     // idに基準に、該当のpostデータを1件取得
-    res.render('pages/post');
+    const post = await Post.getPost(req.params.id);
+    console.log('post at showEditPage', post);
+    res.render('pages/edit', { post });
   },
   doCreateNewPost: async (req, res) => {
     console.log('doCreateNewPost');
-    console.log('req.body', req.body);
     await Post.createNewPost(req.body.title, req.body.content);
     res.redirect('/post');
-    // req.body.title / req.body.content
-    // 「入力されたtitleとcontent」と「ログイン中のuser」を取得し、DBにINSERT
   },
   doUpdatePost: (req, res) => {
     console.log('doUpdatePost');

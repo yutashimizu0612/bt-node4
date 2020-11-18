@@ -5,15 +5,15 @@ const postController = require('../controllers/postController');
 postRouter.get('/', postController.doGetAllPosts);
 
 postRouter.get('/new', (req, res) => {
-  res.render('pages/post');
+  res.render('pages/new');
 });
 
 // TODO validationのmiddleware
 postRouter.post('/new', postController.doCreateNewPost);
 
-postRouter.get('/:postid/edit', postController.doGetPost);
+postRouter.get('/:id/edit', postController.showEditPage);
 
 // TODO validationのmiddleware
-postRouter.post('/:postid/edit', postController.doUpdatePost);
+postRouter.post('/:id/edit', postController.doUpdatePost);
 
 module.exports = postRouter;

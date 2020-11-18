@@ -5,9 +5,10 @@
     <div class="wrapper">
       <%- include("../partials/header") %>
       <!-- postをDBのposttableから取ってきたデータでループさせる -->
+      <% posts.forEach((post) => { %>
       <div class="post">
-        <h2 class="post__title">投稿タイトル</h2>
-        <p class="post__content">コンテンツ内容</p>
+        <h2 class="post__title"><%- post.title %></h2>
+        <p class="post__content"><%- post.content %></p>
         <p class="post__user">投稿者：username</p>
         <div class="like">
           <i class="far fa-heart"></i>
@@ -21,6 +22,7 @@
           </button>
         </div>
       </div>
+      <% }); %>
       <!-- END -->
     </div>
   </body>
