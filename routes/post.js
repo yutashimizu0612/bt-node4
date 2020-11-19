@@ -4,9 +4,7 @@ const postController = require('../controllers/postController');
 
 postRouter.get('/', postController.doGetAllPosts);
 
-postRouter.get('/new', (req, res) => {
-  res.render('pages/new');
-});
+postRouter.get('/new', postController.showNewPage);
 
 // TODO validationのmiddleware
 postRouter.post('/new', postController.doCreateNewPost);

@@ -6,6 +6,9 @@ module.exports = {
     const posts = await Post.getAllPosts();
     res.render('pages/posts', { posts });
   },
+  showNewPage: (req, res) => {
+    res.render('pages/new');
+  },
   showEditPage: async (req, res) => {
     const post = await Post.getPost(req.params.id);
     res.render('pages/edit', { post, id: req.params.id });
