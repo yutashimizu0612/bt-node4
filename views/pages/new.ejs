@@ -4,6 +4,18 @@
   <body>
     <div class="wrapper">
       <%- include("../partials/header") %>
+      <!-- alert -->
+      <% if (typeof errors !== 'undefined') { %>
+      <div class="mb-6">
+        <% errors.forEach(function (error) { %>
+        <div class="notification is-danger is-light">
+          <button class="delete"></button>
+          <%= error.msg %>
+        </div>
+        <% }); %>
+      </div>
+      <% } %>
+      <!-- END alert -->
       <form action="/post/new" method="post">
         <div class="field">
           <label for="title" class="label">タイトル</label>
