@@ -14,4 +14,6 @@ postRouter.get('/:id/edit', postController.showEditPage);
 // TODO validationのmiddleware
 postRouter.post('/:id/edit', postController.doUpdatePost);
 
+postRouter.get('/:id/delete', postController.doDeletePost);
+
 module.exports = postRouter;

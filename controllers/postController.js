@@ -21,4 +21,8 @@ module.exports = {
     await Post.updatePost(req.body.title, req.body.content, req.params.id);
     res.redirect('/post');
   },
+  doDeletePost: async (req, res) => {
+    await Post.deletePost(req.params.id);
+    res.redirect('/post');
+  },
 };

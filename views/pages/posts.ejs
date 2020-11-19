@@ -19,9 +19,13 @@
             class="button is-small is-info is-rounded"
             >編集</a
           >
-          <button class="button is-small is-danger is-rounded is-outlined">
+          <a
+            onclick="return confirm('本当に削除しますか？');"
+            href="/post/<%- post.id %>/delete"
+            class="button is-small is-danger is-rounded is-outlined"
+          >
             削除
-          </button>
+          </a>
         </div>
       </div>
       <% }); %>
