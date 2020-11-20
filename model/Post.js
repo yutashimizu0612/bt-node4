@@ -7,6 +7,7 @@ module.exports = {
   getAllPosts: async () => {
     try {
       const connection = await mysql.createConnection(db_setting);
+      // TODO posts.ejsで、投稿者の表示が必要。そのため、usersテーブルと結合してpostsデータを取得する必要あり
       const [posts] = await connection.execute(`SELECT * FROM ${table}`);
       return posts;
     } catch (error) {
@@ -14,12 +15,14 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
-  getPost: async id => {
+  getPost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
       const [
         post,
-      ] = await connection.execute(`SELECT * FROM ${table} WHERE id = ?`, [id]);
+      ] = await connection.execute(`SELECT * FROM ${table} WHERE post_id = ?`, [
+        id,
+      ]);
       return post[0];
     } catch (error) {
       console.log('error', error);
@@ -47,7 +50,7 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(
-        `UPDATE ${table} SET title = ?, content = ? WHERE id = ?`,
+        `UPDATE ${table} SET title = ?, content = ? WHERE post_id = ?`,
         [title, content, id]
       );
       console.log('The post is updated');
@@ -59,10 +62,10 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
-  deletePost: async id => {
+  deletePost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      await connection.execute(`DELETE FROM ${table} WHERE id = ?`, [id]);
+      await connection.execute(`DELETE FROM ${table} WHERE post_id = ?`, [id]);
       console.log('The post is deleted');
       await connection.end();
       console.log('DBconnection is closed');

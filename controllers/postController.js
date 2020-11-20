@@ -15,11 +15,13 @@ module.exports = {
     res.render('pages/edit', { post, id: req.params.id });
   },
   doCreateNewPost: async (req, res) => {
-    // バリデーションエラーの場合、エラー文と入力値を渡す
+    // バリデーションエラーの場合、エラー文を渡す
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.render('pages/new', { errors: errors.array() });
     }
+    // authenticateTokenで認証okだった場合、req.userにpayloadが入るので、req.user.idをcreateNewPostに渡す（payloadにid追加する）
+    // payloadにidは入れて良いのか？？
     await Post.createNewPost(req.body.title, req.body.content);
     res.redirect('/post');
   },
