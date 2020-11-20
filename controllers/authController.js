@@ -36,7 +36,8 @@ module.exports = {
 
   login: async (req, res) => {
     try {
-      const user = await Auth.getUserByEmail(req.body.email);
+      const user = await Auth.getUserPasswordByEmail(req.body.email);
+      console.log('user', user);
       // ユーザが見つからない場合
       if (!user) {
         return res.json({ error: '登録されていないメールアドレスです。' });
