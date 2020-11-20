@@ -1,9 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const auth = require('./controllers/auth');
-const validation = require('./middleware/validation');
 const { authenticateToken } = require('./middleware/authenticateToken');
+const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 
 const app = express();
@@ -14,29 +13,12 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static(__dirname + '/static'));
+app.use('/auth', authRouter);
 app.use('/post', postRouter);
 
 // トップページ
 app.get('/', authenticateToken, (req, res) => {
   res.render('pages/index');
-});
-
-// ユーザ登録
-app.get('/register', (req, res) => {
-  res.render('pages/register');
-});
-
-app.post('/register', validation.validateRegisterForm(), (req, res) => {
-  auth.register(req, res);
-});
-
-// ログイン
-app.get('/login', (req, res) => {
-  res.render('pages/login');
-});
-
-app.post('/login', (req, res) => {
-  auth.login(req, res);
 });
 
 // app.post('/token', (req, res) => {

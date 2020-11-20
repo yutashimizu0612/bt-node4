@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 // dbに名前変える
-const db_setting = require('../model/dbSetting');
+const db_setting = require('../models/dbSetting');
 const table = 'posts';
 
 module.exports = {
