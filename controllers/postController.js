@@ -1,5 +1,5 @@
 // modelsにする
-const Post = require('../model/Post');
+const Post = require('../models/Post');
 const { validationResult } = require('express-validator');
 
 module.exports = {

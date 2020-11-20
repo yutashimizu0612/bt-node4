@@ -1,5 +1,4 @@
 const mysql = require('mysql2/promise');
-// dbに名前変える
 const db_setting = require('../models/dbSetting');
 const table = 'posts';
 
@@ -20,9 +19,7 @@ module.exports = {
       const connection = await mysql.createConnection(db_setting);
       const [
         post,
-      ] = await connection.execute(`SELECT * FROM ${table} WHERE post_id = ?`, [
-        id,
-      ]);
+      ] = await connection.execute(`SELECT * FROM ${table} WHERE id = ?`, [id]);
       return post[0];
     } catch (error) {
       console.log('error', error);
@@ -50,7 +47,7 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(
-        `UPDATE ${table} SET title = ?, content = ? WHERE post_id = ?`,
+        `UPDATE ${table} SET title = ?, content = ? WHERE id = ?`,
         [title, content, id]
       );
       console.log('The post is updated');
@@ -65,7 +62,7 @@ module.exports = {
   deletePost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      await connection.execute(`DELETE FROM ${table} WHERE post_id = ?`, [id]);
+      await connection.execute(`DELETE FROM ${table} WHERE id = ?`, [id]);
       console.log('The post is deleted');
       await connection.end();
       console.log('DBconnection is closed');
