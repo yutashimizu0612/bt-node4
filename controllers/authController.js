@@ -58,4 +58,9 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
+  logout: (req, res) => {
+    res.clearCookie('accessToken');
+    res.redirect('/auth/login');
+  },
 };
