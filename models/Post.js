@@ -24,7 +24,6 @@ module.exports = {
         `SELECT title, content FROM ${table} WHERE id = ?`,
         [id]
       );
-      console.log('post', post);
       return post[0];
     } catch (error) {
       console.log('error', error);
