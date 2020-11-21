@@ -22,7 +22,8 @@ module.exports = {
     }
     // authenticateTokenで認証okだった場合、req.userにpayloadが入るので、req.user.idをcreateNewPostに渡す（payloadにid追加する）
     // payloadにidは入れて良いのか？？
-    await Post.createNewPost(req.body.title, req.body.content);
+    // 仮でid入れる
+    await Post.createNewPost(req.body.title, req.body.content, 6);
     res.redirect('/post');
   },
   doUpdatePost: async (req, res) => {

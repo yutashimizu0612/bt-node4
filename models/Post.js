@@ -6,8 +6,9 @@ module.exports = {
   getAllPosts: async () => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      // TODO posts.ejsで、投稿者の表示が必要。そのため、usersテーブルと結合してpostsデータを取得する必要あり
-      const [posts] = await connection.execute(`SELECT * FROM ${table}`);
+      const [posts] = await connection.execute(
+        `SELECT ${table}.title, ${table}.content, users.name FROM ${table} INNER JOIN users ON ${table}.user_id = users.id`
+      );
       return posts;
     } catch (error) {
       console.log('error', error);
@@ -26,13 +27,12 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
-  // TODO 投稿ユーザのidも追加する必要あり
-  createNewPost: async (title, content) => {
+  createNewPost: async (title, content, userId) => {
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(
-        `INSERT INTO ${table} SET title = ?, content = ?`,
-        [title, content]
+        `INSERT INTO ${table} SET title = ?, content = ?, user_id = ?`,
+        [title, content, userId]
       );
       console.log('new post is created');
       await connection.end();
