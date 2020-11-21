@@ -36,8 +36,7 @@ module.exports = {
 
   login: async (req, res) => {
     try {
-      const user = await Auth.getUserPasswordByEmail(req.body.email);
-      console.log('user', user);
+      const user = await Auth.getUserByEmail(req.body.email);
       // ユーザが見つからない場合
       if (!user) {
         return res.json({ error: '登録されていないメールアドレスです。' });
@@ -45,10 +44,7 @@ module.exports = {
       // ログイン処理
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
-        const accessToken = generateAccessToken({
-          name: user.name,
-          email: user.email,
-        });
+        const accessToken = generateAccessToken({ id: user.id });
         // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
         // ここでrefreshTokenをDBに保存？
         res.json({ token: accessToken });

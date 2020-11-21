@@ -18,13 +18,13 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
-  getUserPasswordByEmail: async (email) => {
+  getUserByEmail: async (email) => {
     try {
       connection = await mysql.createConnection(db_setting);
       const [
         user,
       ] = await connection.execute(
-        'SELECT password FROM users WHERE email = ?',
+        'SELECT id, password FROM users WHERE email = ?',
         [email]
       );
       return user[0];
