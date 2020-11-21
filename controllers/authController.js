@@ -45,9 +45,11 @@ module.exports = {
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
         const accessToken = generateAccessToken({ id: user.id });
-        // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-        // ここでrefreshTokenをDBに保存？
-        res.json({ token: accessToken });
+        res.cookie('accessToken', accessToken, {
+          maxAge: 900000,
+          httpOnly: true,
+        });
+        res.redirect('/');
       } else {
         return res.json({ error: 'パスワードが間違っています。' });
       }
