@@ -44,10 +44,7 @@ module.exports = {
       // ログイン処理
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
-        const accessToken = generateAccessToken({
-          name: user.name,
-          email: user.email,
-        });
+        const accessToken = generateAccessToken({ id: user.id });
         // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
         // ここでrefreshTokenをDBに保存？
         res.json({ token: accessToken });

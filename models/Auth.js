@@ -23,9 +23,10 @@ module.exports = {
       connection = await mysql.createConnection(db_setting);
       const [
         user,
-      ] = await connection.execute('SELECT * FROM users WHERE email = ?', [
-        email,
-      ]);
+      ] = await connection.execute(
+        'SELECT id, password FROM users WHERE email = ?',
+        [email]
+      );
       return user[0];
     } catch (error) {
       console.log('error', error);
