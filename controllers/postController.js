@@ -1,4 +1,3 @@
-// modelsにする
 const Post = require('../models/Post');
 const { validationResult } = require('express-validator');
 
@@ -20,6 +19,7 @@ module.exports = {
     if (!errors.isEmpty()) {
       return res.render('pages/new', { errors: errors.array() });
     }
+    // TODO
     // authenticateTokenで認証okだった場合、req.userにpayloadが入るので、req.user.idをcreateNewPostに渡す（payloadにid追加する）
     // payloadにidは入れて良いのか？？
     // 仮でid入れる
