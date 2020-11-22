@@ -2,7 +2,9 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
 const Auth = require('../models/Auth');
-const { generateAccessToken } = require('../functions/generateAccessToken');
+const {
+  setAccessTokenToCookie,
+} = require('../functions/setAccessTokenToCookie');
 
 require('dotenv').config();
 
@@ -21,9 +23,8 @@ module.exports = {
     try {
       const { name, email } = req.body;
       const hash = await bcrypt.hash(req.body.password, 10);
-      await Auth.register(name, email, hash);
-      console.log('new user is created');
-      res.redirect('/');
+      const newUserId = await Auth.register(name, email, hash);
+      setAccessTokenToCookie(res, newUserId);
     } catch (error) {
       console.log('error', error);
       return res.status(400).json({ error: error });
@@ -41,15 +42,9 @@ module.exports = {
       if (!user) {
         return res.json({ error: '登録されていないメールアドレスです。' });
       }
-      // ログイン処理
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
-        const accessToken = generateAccessToken({ id: user.id });
-        res.cookie('accessToken', accessToken, {
-          maxAge: 900000,
-          httpOnly: true,
-        });
-        res.redirect('/');
+        setAccessTokenToCookie(res, user.id);
       } else {
         return res.json({ error: 'パスワードが間違っています。' });
       }
