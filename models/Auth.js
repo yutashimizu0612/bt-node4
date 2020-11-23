@@ -5,14 +5,14 @@ module.exports = {
   register: async (name, email, hash) => {
     try {
       connection = await mysql.createConnection(db_setting);
-      await connection.execute(
+      const result = await connection.execute(
         'INSERT INTO users SET name = ?, email = ?, password = ?',
         [name, email, hash]
       );
       console.log('new user is created');
       await connection.end();
       console.log('DBconnection is closed');
-      return;
+      return result[0].insertId;
     } catch (error) {
       console.log('error', error);
       return res.status(400).json({ error: error });
