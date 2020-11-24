@@ -2,9 +2,7 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
 const Auth = require('../models/Auth');
-const {
-  setAccessTokenToCookie,
-} = require('../functions/setAccessTokenToCookie');
+const { setAccessTokenToCookie } = require('../functions/setAccessTokenToCookie');
 
 require('dotenv').config();
 

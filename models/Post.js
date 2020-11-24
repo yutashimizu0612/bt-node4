@@ -18,12 +18,9 @@ module.exports = {
   getPost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      const [
-        post,
-      ] = await connection.execute(
-        `SELECT title, content FROM ${table} WHERE id = ?`,
-        [id]
-      );
+      const [post] = await connection.execute(`SELECT title, content FROM ${table} WHERE id = ?`, [
+        id,
+      ]);
       return post[0];
     } catch (error) {
       console.log('error', error);
@@ -33,10 +30,11 @@ module.exports = {
   createNewPost: async (title, content, userId) => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      await connection.execute(
-        `INSERT INTO ${table} SET title = ?, content = ?, user_id = ?`,
-        [title, content, userId]
-      );
+      await connection.execute(`INSERT INTO ${table} SET title = ?, content = ?, user_id = ?`, [
+        title,
+        content,
+        userId,
+      ]);
       console.log('new post is created');
       await connection.end();
       console.log('DBconnection is closed');
@@ -49,10 +47,11 @@ module.exports = {
   updatePost: async (title, content, id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      await connection.execute(
-        `UPDATE ${table} SET title = ?, content = ? WHERE id = ?`,
-        [title, content, id]
-      );
+      await connection.execute(`UPDATE ${table} SET title = ?, content = ? WHERE id = ?`, [
+        title,
+        content,
+        id,
+      ]);
       console.log('The post is updated');
       await connection.end();
       console.log('DBconnection is closed');
