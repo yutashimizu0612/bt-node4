@@ -16,7 +16,8 @@ postRouter.post(
   postController.doCreateNewPost
 );
 
-postRouter.get('/:id/edit', postController.showEditPage);
+postRouter.get('/:id/edit', authenticateToken, postController.showEditPage);
+
 postRouter.post(
   '/:id/edit',
   authenticateToken,
