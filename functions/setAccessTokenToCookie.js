@@ -6,5 +6,4 @@ exports.setAccessTokenToCookie = (res, id) => {
     maxAge: 900000,
     httpOnly: true,
   });
-  res.redirect('/');
 };

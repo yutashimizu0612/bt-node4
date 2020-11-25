@@ -23,6 +23,7 @@ module.exports = {
       const hash = await bcrypt.hash(req.body.password, 10);
       const newUserId = await Auth.register(name, email, hash);
       setAccessTokenToCookie(res, newUserId);
+      return res.redirect(301, '/');
     } catch (error) {
       console.log('error', error);
       return res.status(400).json({ error: error });
@@ -43,6 +44,7 @@ module.exports = {
       const match = await bcrypt.compare(req.body.password, user.password);
       if (match) {
         setAccessTokenToCookie(res, user.id);
+        return res.redirect(301, '/');
       } else {
         return res.status(403).json({ error: 'パスワードが間違っています。' });
       }
