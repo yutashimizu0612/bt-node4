@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 
 const { authenticateToken } = require('./middleware/authenticateToken');
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/auth', authRouter);
+app.use('/post', postRouter);
 
 // トップページ
 app.get('/', authenticateToken, (req, res) => {

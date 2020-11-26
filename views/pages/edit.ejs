@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body>
+    <div class="wrapper">
+      <%- include("../partials/headerLoggedIn") %>
+      <!-- alert -->
+      <% if (typeof errors !== 'undefined') { %>
+      <div class="mb-6">
+        <% errors.forEach(function (error) { %>
+        <div class="notification is-danger is-light">
+          <button class="delete"></button>
+          <%= error.msg %>
+        </div>
+        <% }); %>
+      </div>
+      <% } %>
+      <!-- END alert -->
+      <form action="/post/<%= id %>/edit" method="post">
+        <div class="field">
+          <label for="title" class="label">タイトル</label>
+          <div class="control">
+            <input id="title" name="title" class="input" type="text" value="<%= post.title %>" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="content" class="label">コンテンツ</label>
+          <div class="control">
+            <textarea id="content" name="content" class="textarea"><%- post.content %></textarea>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="button is-info" type="submit">編集完了</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
