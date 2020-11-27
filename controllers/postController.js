@@ -20,7 +20,7 @@ module.exports = {
       return res.render('pages/new', { errors: errors.array() });
     }
     await Post.createNewPost(req.body.title, req.body.content, req.user.id);
-    res.redirect('/post');
+    return res.redirect(301, '/post');
   },
   doUpdatePost: async (req, res) => {
     const { title, content } = req.body;
@@ -35,10 +35,10 @@ module.exports = {
       });
     }
     await Post.updatePost(title, content, id);
-    res.redirect('/post');
+    return res.redirect(301, '/post');
   },
   doDeletePost: async (req, res) => {
     await Post.deletePost(req.params.id);
-    res.redirect('/post');
+    return res.redirect(301, '/post');
   },
 };
