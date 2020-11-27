@@ -6,13 +6,17 @@ module.exports = {
     const posts = await Post.getAllPosts();
     res.render('pages/posts', { posts });
   },
+
   showNewPage: (req, res) => {
     res.render('pages/new');
   },
+
   showEditPage: async (req, res) => {
     const post = await Post.getPost(req.params.id);
+    if (!post) return res.render('pages/404');
     res.render('pages/edit', { post, id: req.params.id });
   },
+
   doCreateNewPost: async (req, res) => {
     // バリデーションエラーの場合、エラー文を渡す
     const errors = validationResult(req);
@@ -22,6 +26,7 @@ module.exports = {
     await Post.createNewPost(req.body.title, req.body.content, req.user.id);
     return res.redirect(301, '/post');
   },
+
   doUpdatePost: async (req, res) => {
     const { title, content } = req.body;
     const id = req.params.id;
@@ -37,6 +42,7 @@ module.exports = {
     await Post.updatePost(title, content, id);
     return res.redirect(301, '/post');
   },
+
   doDeletePost: async (req, res) => {
     await Post.deletePost(req.params.id);
     return res.redirect(301, '/post');
