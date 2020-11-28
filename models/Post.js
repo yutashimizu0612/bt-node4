@@ -47,9 +47,7 @@ module.exports = {
         content,
         userId,
       ]);
-      console.log('new post is created');
       await connection.end();
-      console.log('DBconnection is closed');
       return;
     } catch (error) {
       console.log('error', error);
@@ -64,9 +62,7 @@ module.exports = {
         content,
         id,
       ]);
-      console.log('The post is updated');
       await connection.end();
-      console.log('DBconnection is closed');
       return;
     } catch (error) {
       console.log('error', error);
@@ -77,9 +73,7 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(`DELETE FROM ${table} WHERE id = ?`, [id]);
-      console.log('The post is deleted');
       await connection.end();
-      console.log('DBconnection is closed');
       return;
     } catch (error) {
       console.log('error', error);
