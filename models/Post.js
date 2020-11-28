@@ -18,10 +18,22 @@ module.exports = {
   getPost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
-      const [post] = await connection.execute(`SELECT title, content FROM ${table} WHERE id = ?`, [
+      const [
+        post,
+      ] = await connection.execute(`SELECT title, content, user_id FROM ${table} WHERE id = ?`, [
         id,
       ]);
       return post[0];
+    } catch (error) {
+      console.log('error', error);
+      return res.status(400).json({ error: error });
+    }
+  },
+  getPostUserId: async (id) => {
+    try {
+      const connection = await mysql.createConnection(db_setting);
+      const [post] = await connection.execute(`SELECT user_id FROM ${table} WHERE id = ?`, [id]);
+      return post[0].user_id;
     } catch (error) {
       console.log('error', error);
       return res.status(400).json({ error: error });

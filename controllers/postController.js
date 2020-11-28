@@ -14,6 +14,7 @@ module.exports = {
   showEditPage: async (req, res) => {
     const post = await Post.getPost(req.params.id);
     if (!post) return res.render('pages/404');
+    if (post.user_id !== req.user.id) return res.redirect(301, '/post'); // 自身の投稿編集ページ以外は投稿トップへリダイレクト
     res.render('pages/edit', { post, id: req.params.id });
   },
 
@@ -39,12 +40,20 @@ module.exports = {
         id,
       });
     }
-    await Post.updatePost(title, content, id);
-    return res.redirect(301, '/post');
+    const userId = await Post.getPostUserId(id);
+    if (userId === req.user.id) {
+      await Post.updatePost(title, content, id);
+      return res.redirect(301, '/post');
+    }
+    return res.status(403).json({ error: 'このページの編集は許可されていません' });
   },
 
   doDeletePost: async (req, res) => {
-    await Post.deletePost(req.params.id);
-    return res.redirect(301, '/post');
+    const userId = await Post.getPostUserId(req.params.id);
+    if (userId === req.user.id) {
+      await Post.deletePost(req.params.id);
+      return res.redirect(301, '/post');
+    }
+    return res.status(403).json({ error: 'このページの削除は許可されていません' });
   },
 };
