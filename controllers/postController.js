@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 module.exports = {
   doGetAllPosts: async (req, res) => {
     const posts = await Post.getAllPosts();
-    res.render('pages/posts', { posts });
+    res.render('pages/posts', { posts, id: req.user.id });
   },
 
   showNewPage: (req, res) => {

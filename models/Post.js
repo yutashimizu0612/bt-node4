@@ -7,7 +7,7 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       const [posts] = await connection.execute(
-        `SELECT ${table}.id, ${table}.title, ${table}.content, users.name FROM ${table} INNER JOIN users ON ${table}.user_id = users.id`
+        `SELECT ${table}.id, ${table}.title, ${table}.content,${table}.user_id, users.name FROM ${table} INNER JOIN users ON ${table}.user_id = users.id`
       );
       return posts;
     } catch (error) {
