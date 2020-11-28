@@ -3,7 +3,7 @@ const postRouter = express.Router();
 
 const postController = require('../controllers/postController');
 const validation = require('../middleware/validation');
-const { authenticateToken } = require('../middleware/authenticateToken');
+const { authenticateToken } = require('../middleware/authentication');
 
 postRouter.get('/', authenticateToken, postController.doGetAllPosts);
 
