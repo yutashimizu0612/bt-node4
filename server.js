@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-const { authenticateToken } = require('./middleware/authenticateToken');
+const { authenticateToken } = require('./middleware/authentication');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 
