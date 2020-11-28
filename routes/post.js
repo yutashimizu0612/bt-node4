@@ -2,8 +2,8 @@ const express = require('express');
 const postRouter = express.Router();
 
 const postController = require('../controllers/postController');
-const validation = require('../middleware/validation');
 const { authenticateToken } = require('../middleware/authentication');
+const validation = require('../middleware/validation');
 
 postRouter.get('/', authenticateToken, postController.doGetAllPosts);
 
