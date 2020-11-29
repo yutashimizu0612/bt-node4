@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body>
+    <div class="wrapper">
+      <!-- header -->
+      <%- include("../partials/headerLoggedIn") %>
+      <!-- END header -->
+      <% posts.forEach((post) => { %>
+      <div class="post">
+        <h2 class="post__title"><%- post.title %></h2>
+        <p class="post__content"><%- post.content %></p>
+        <p class="post__user">投稿者：<%- post.name %></p>
+        <div class="like">
+          <i class="far fa-heart"></i>
+          <i class="fas fa-heart has-text-success"></i>
+          <span class="like__number">3</span>
+        </div>
+        <% if (post.user_id === id) { %>
+        <div class="buttons mt-3">
+          <a href="/post/<%- post.id %>/edit" class="button is-small is-info is-rounded">編集</a>
+          <a
+            onclick="return confirm('本当に削除しますか？');"
+            href="/post/<%- post.id %>/delete"
+            class="button is-small is-danger is-rounded is-outlined"
+          >
+            削除
+          </a>
+        </div>
+        <% } %>
+      </div>
+      <% }); %>
+      <!-- END -->
+    </div>
+  </body>
+</html>

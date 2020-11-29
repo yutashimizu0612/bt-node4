@@ -6,11 +6,7 @@ const validation = require('../middleware/validation');
 const redirect = require('../middleware/redirect');
 
 // ユーザ登録
-authRouter.get(
-  '/register',
-  redirect.redirectToHome,
-  authController.showRegisterPage
-);
+authRouter.get('/register', redirect.redirectToHome, authController.showRegisterPage);
 
 authRouter.post(
   '/register',
