@@ -20,6 +20,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   getPost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -34,6 +35,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   getPostUserId: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -44,6 +46,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   createNewPost: async (title, content, userId) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -59,6 +62,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   updatePost: async (title, content, id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -74,6 +78,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   deletePost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
