@@ -7,7 +7,12 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       const [posts] = await connection.execute(
-        `SELECT ${table}.id, ${table}.title, ${table}.content,${table}.user_id, users.name FROM ${table} INNER JOIN users ON ${table}.user_id = users.id`
+        ` SELECT ${table}.id, ${table}.title, ${table}.content,${table}.user_id, users.name, COUNT(likes.post_id) AS likes
+          FROM ${table}
+          INNER JOIN users ON ${table}.user_id = users.id
+          LEFT JOIN likes ON ${table}.id = likes.post_id
+          GROUP BY ${table}.id
+        `
       );
       return posts;
     } catch (error) {

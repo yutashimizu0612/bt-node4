@@ -14,7 +14,7 @@
         <div class="like">
           <i class="far fa-heart"></i>
           <i class="fas fa-heart has-text-success"></i>
-          <span class="like__number">3</span>
+          <span class="like__number"><%- post.likes %></span>
         </div>
         <% if (post.user_id === id) { %>
         <div class="buttons mt-3">
