@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Like = require('../models/Like');
 const { validationResult } = require('express-validator');
 
 module.exports = {
@@ -56,4 +57,31 @@ module.exports = {
     }
     return res.status(403).json({ error: 'このページの削除は許可されていません' });
   },
+
+  toggleLike: async (req, res) => {
+    console.log('------------------');
+    console.log('toggleLike');
+    const postId = parseInt(req.params.id);
+    const userId = req.user.id;
+    const like = await Like.getLike(postId, userId);
+    console.log('getLikeの戻り値', like);
+    if (!like) {
+      Like.like(postId, userId);
+    } else {
+      Like.deleteLike(postId, userId);
+    }
+    // return res.redirect(301, '/post');
+  },
+
+  // doLike: async (req, res) => {
+  //   console.log('likeしました');
+  //   Like.like(req.params.id, req.user.id);
+  //   return res.redirect(301, '/post');
+  // },
+
+  // doDeleteLike: async (req, res) => {
+  //   console.log('likeを削除しました');
+  //   Like.deleteLike(req.params.id, req.user.id);
+  //   return res.redirect(301, '/post');
+  // },
 };

@@ -12,8 +12,18 @@
         <p class="post__content"><%- post.content %></p>
         <p class="post__user">投稿者：<%- post.name %></p>
         <div class="like">
-          <i class="far fa-heart"></i>
-          <i class="fas fa-heart has-text-success"></i>
+          <!-- ログイン中のユーザがいいねしていない -->
+          <!-- <a href="/post/<%- post.id %>/like">
+            <i class="far fa-heart js-like" data-postId="<%- post.id %>"></i>
+          </a> -->
+          <!-- ログイン中のユーザがいいね済み -->
+          <!-- <a href="/post/<%- post.id %>/like">
+            <i class="fas fa-heart has-text-success js-like" data-postId="<%- post.id %>"></i>
+          </a> -->
+          <!-- <i class="fas fa-heart has-text-success js-like" data-postId="<%- post.id %>"></i> -->
+          <!-- END -->
+          <i class="far fa-heart js-like" data-postId="<%- post.id %>"></i>
+          <i class="fas fa-heart has-text-success js-like" data-postId="<%- post.id %>"></i>
           <span class="like__number"><%- post.likes %></span>
         </div>
         <% if (post.user_id === id) { %>
@@ -32,5 +42,14 @@
       <% }); %>
       <!-- END -->
     </div>
+    <script>
+      document.querySelectorAll('.js-like').forEach((icon) => {
+        icon.addEventListener('click', (e) => {
+          console.log('like click');
+          const postId = e.target.getAttribute('data-postId');
+          location.href = `http://localhost:3000/post/${postId}/like`;
+        });
+      });
+    </script>
   </body>
 </html>
