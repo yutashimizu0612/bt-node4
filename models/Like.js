@@ -41,9 +41,9 @@ module.exports = {
     }
   },
 
-  getLike: async (postId, userId) => {
+  findLike: async (postId, userId) => {
     console.log('------------------');
-    console.log('getLike関数');
+    console.log('findLike関数');
     const sql = `SELECT id FROM ${table} WHERE post_id = ? AND user_id = ?`;
     try {
       const connection = await mysql.createConnection(db_setting);
