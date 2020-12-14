@@ -27,10 +27,4 @@ postRouter.post(
 
 postRouter.get('/:id/delete', authenticateToken, postController.doDeletePost);
 
-postRouter.get('/:id/like', authenticateToken, postController.toggleLike);
-
-// postRouter.get('/:id/like', authenticateToken, postController.doLike);
-
-// postRouter.get('/:id/like/delete', authenticateToken, postController.doDeleteLike);
-
 module.exports = postRouter;
