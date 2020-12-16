@@ -1,12 +1,23 @@
 const Post = require('../models/Post');
+const Like = require('../models/Like');
 const { validationResult } = require('express-validator');
 
 module.exports = {
   doGetAllPosts: async (req, res) => {
     const posts = await Post.getAllPosts();
-    // ログイン中のユーザがいいねしているidを取得
-    // likeStatus: true/falseをpostsオブジェクトのそれぞれの要素に追加
-    res.render('pages/posts', { posts, id: req.user.id });
+    // ログイン中のユーザがいいね済の投稿idを取得
+    const likedPosts = await Like.getPostIdLikedByUser(req.user.id);
+    // likeStatusプロパティ（ログイン中のユーザがいいね済の投稿：true）
+    const result = posts.map((post) => {
+      let status = likedPosts.find((likedPost) => post.id === likedPost.post_id);
+      if (status) {
+        post['likeStatus'] = true;
+      } else {
+        post['likeStatus'] = false;
+      }
+      return post;
+    });
+    res.render('pages/posts', { posts: result, id: req.user.id });
   },
 
   showNewPage: (req, res) => {

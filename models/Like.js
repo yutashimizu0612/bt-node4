@@ -57,4 +57,20 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
+  getPostIdLikedByUser: async (userId) => {
+    console.log('------------------');
+    console.log('getPostIdLikedByUser関数');
+    const sql = `SELECT post_id FROM ${table} WHERE user_id = ?`;
+    try {
+      const connection = await mysql.createConnection(db_setting);
+      const [postIds] = await connection.execute(sql, [userId]);
+      await connection.end();
+      if (!postIds[0]) return null;
+      return postIds;
+    } catch (error) {
+      console.log('error', error);
+      return res.status(400).json({ error: error });
+    }
+  },
 };
