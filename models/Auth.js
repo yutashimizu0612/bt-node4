@@ -18,6 +18,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   getUserByEmail: async (email) => {
     try {
       connection = await mysql.createConnection(db_setting);
