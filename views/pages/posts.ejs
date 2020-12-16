@@ -13,8 +13,16 @@
         <p class="post__user">投稿者：<%- post.name %></p>
         <div class="like">
           <!-- 渡ってきたlikeのstatusでいいねアイコンを出し分ける -->
+          <% if (post.likeStatus) { %>
+          <i class="far fa-heart js-like like__icon is-hidden" data-postid="<%- post.id %>"></i>
+          <i class="fa fa-heart js-delete-like like__icon" data-postid="<%- post.id %>"></i>
+          <% } else { %>
           <i class="far fa-heart js-like like__icon" data-postid="<%- post.id %>"></i>
-          <i class="far fa-heart js-delete-like has-text-success" data-postid="<%- post.id %>"></i>
+          <i
+            class="fa fa-heart js-delete-like like__icon is-hidden"
+            data-postid="<%- post.id %>"
+          ></i>
+          <% } %>
           <span class="like__number js-like-number"><%- post.likes %></span>
         </div>
         <% if (post.user_id === id) { %>
