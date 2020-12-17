@@ -73,4 +73,20 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
+  deleteLikesByPostId: async (postId) => {
+    console.log('------------------');
+    console.log('deleteLikesBypostId関数');
+    try {
+      const connection = await mysql.createConnection(db_setting);
+      await connection.execute(`DELETE FROM ${table} WHERE post_id = ?`, [postId]);
+      console.log(postId + 'のいいねを削除しました');
+      await connection.end();
+      console.log('DB接続終了');
+      return;
+    } catch (error) {
+      console.log('error', error);
+      return res.status(400).json({ error: error });
+    }
+  },
 };

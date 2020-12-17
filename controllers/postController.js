@@ -62,9 +62,12 @@ module.exports = {
   },
 
   doDeletePost: async (req, res) => {
-    const userId = await Post.getPostUserId(req.params.id);
+    const postId = req.params.id;
+    const userId = await Post.getPostUserId(postId);
     if (userId === req.user.id) {
-      await Post.deletePost(req.params.id);
+      // 併せて投稿に紐づいたいいねを削除
+      await Like.deleteLikesByPostId(postId);
+      await Post.deletePost(postId);
       return res.redirect(301, '/post');
     }
     return res.status(403).json({ error: 'このページの削除は許可されていません' });
