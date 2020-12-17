@@ -58,7 +58,7 @@ module.exports = {
     }
   },
 
-  getPostIdLikedByUser: async (userId) => {
+  getPostIdsLikedByLoggedInUser: async (userId) => {
     console.log('------------------');
     console.log('getPostIdLikedByUser関数');
     const sql = `SELECT post_id FROM ${table} WHERE user_id = ?`;
@@ -66,7 +66,6 @@ module.exports = {
       const connection = await mysql.createConnection(db_setting);
       const [postIds] = await connection.execute(sql, [userId]);
       await connection.end();
-      if (!postIds[0]) return null;
       return postIds;
     } catch (error) {
       console.log('error', error);

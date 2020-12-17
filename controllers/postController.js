@@ -6,7 +6,7 @@ module.exports = {
   doGetAllPosts: async (req, res) => {
     const posts = await Post.getAllPosts();
     // ログイン中のユーザがいいね済の投稿idを取得
-    const likedPosts = await Like.getPostIdLikedByUser(req.user.id);
+    const likedPosts = await Like.getPostIdsLikedByLoggedInUser(req.user.id);
     // likeStatusプロパティ（ログイン中のユーザがいいね済の投稿：true）
     const result = posts.map((post) => {
       let status = likedPosts.find((likedPost) => post.id === likedPost.post_id);
