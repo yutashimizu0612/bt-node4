@@ -25,7 +25,7 @@ module.exports = {
   },
 
   showEditPage: async (req, res) => {
-    const post = await Post.getPost(postId);
+    const post = await Post.getPost(req.params.id);
     if (!post) return res.render('pages/404');
     if (post.user_id !== req.user.id) return res.redirect(301, '/post'); // 自身の投稿編集ページ以外は投稿トップへリダイレクト
     res.render('pages/edit', { post, id: req.params.id });
