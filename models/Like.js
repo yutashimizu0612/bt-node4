@@ -4,17 +4,13 @@ const table = 'likes';
 
 module.exports = {
   like: async (postId, userId) => {
-    console.log('------------------');
-    console.log('like関数');
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(`INSERT INTO ${table} SET post_id = ?, user_id = ?`, [
         postId,
         userId,
       ]);
-      console.log('likeしました');
       await connection.end();
-      console.log('DB接続終了');
       return;
     } catch (error) {
       console.log('error', error);
@@ -23,17 +19,13 @@ module.exports = {
   },
 
   deleteLike: async (postId, userId) => {
-    console.log('------------------');
-    console.log('deleteLike関数');
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(`DELETE FROM ${table} WHERE post_id = ? AND user_id = ?`, [
         postId,
         userId,
       ]);
-      console.log('deleteLikeしました');
       await connection.end();
-      console.log('DB接続終了');
       return;
     } catch (error) {
       console.log('error', error);
@@ -42,13 +34,10 @@ module.exports = {
   },
 
   findLike: async (postId, userId) => {
-    console.log('------------------');
-    console.log('findLike関数');
     const sql = `SELECT id FROM ${table} WHERE post_id = ? AND user_id = ?`;
     try {
       const connection = await mysql.createConnection(db_setting);
       const [like] = await connection.execute(sql, [postId, userId]);
-      console.log('like[0]', like[0]);
       await connection.end();
       if (!like[0]) return null;
       return like[0].id;
@@ -59,8 +48,6 @@ module.exports = {
   },
 
   getPostIdsLikedByLoggedInUser: async (userId) => {
-    console.log('------------------');
-    console.log('getPostIdLikedByUser関数');
     const sql = `SELECT post_id FROM ${table} WHERE user_id = ?`;
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -74,14 +61,10 @@ module.exports = {
   },
 
   deleteLikesByPostId: async (postId) => {
-    console.log('------------------');
-    console.log('deleteLikesBypostId関数');
     try {
       const connection = await mysql.createConnection(db_setting);
       await connection.execute(`DELETE FROM ${table} WHERE post_id = ?`, [postId]);
-      console.log(postId + 'のいいねを削除しました');
       await connection.end();
-      console.log('DB接続終了');
       return;
     } catch (error) {
       console.log('error', error);
