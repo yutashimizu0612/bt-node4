@@ -7,7 +7,7 @@ module.exports = {
     const posts = await Post.getAllPosts();
     // ログイン中のユーザがいいね済の投稿idを取得
     const likedPosts = await Like.getPostIdsLikedByLoggedInUser(req.user.id);
-    // likeStatusプロパティ（ログイン中のユーザがいいね済の投稿：true）
+    // postsにlikeStatusプロパティを追加（ログイン中のユーザがいいね済の投稿：true）
     const result = posts.map((post) => {
       let status = likedPosts.find((likedPost) => post.id === likedPost.post_id);
       if (status) {
