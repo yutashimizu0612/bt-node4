@@ -16,3 +16,8 @@
 .post__user {
   margin: 12px 0 6px;
 }
+
+.like__icon {
+  color: #23d160;
+  cursor: pointer;
+}

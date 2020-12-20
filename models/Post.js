@@ -7,7 +7,12 @@ module.exports = {
     try {
       const connection = await mysql.createConnection(db_setting);
       const [posts] = await connection.execute(
-        `SELECT ${table}.id, ${table}.title, ${table}.content,${table}.user_id, users.name FROM ${table} INNER JOIN users ON ${table}.user_id = users.id`
+        ` SELECT ${table}.id, ${table}.title, ${table}.content,${table}.user_id, users.name, COUNT(likes.post_id) AS likes
+          FROM ${table}
+          INNER JOIN users ON ${table}.user_id = users.id
+          LEFT JOIN likes ON ${table}.id = likes.post_id
+          GROUP BY ${table}.id
+        `
       );
       return posts;
     } catch (error) {
@@ -15,6 +20,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   getPost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -29,6 +35,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   getPostUserId: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -39,6 +46,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   createNewPost: async (title, content, userId) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -54,6 +62,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   updatePost: async (title, content, id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
@@ -69,6 +78,7 @@ module.exports = {
       return res.status(400).json({ error: error });
     }
   },
+
   deletePost: async (id) => {
     try {
       const connection = await mysql.createConnection(db_setting);
